@@ -1,8 +1,12 @@
-import { cn } from '@/lib/utils'
-import { TooltipProvider } from '@/components/ui/tooltip'
-import { ThemeProvider } from '@/components/theme-provider'
+import '@mantine/core/styles.css'
+import { MantineProvider, ColorSchemeScript } from '@mantine/core'
+import { ModalsProvider } from '@mantine/modals'
+import { Notifications } from '@mantine/notifications'
 import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { Button } from '@mantine/core';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,16 +17,22 @@ export const metadata = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="zh" suppressHydrationWarning>
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className={cn('antialiased', inter.className)}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
-        </ThemeProvider>
+        <MantineProvider defaultColorScheme="auto">
+          <ModalsProvider>
+            <Notifications />
+            <TooltipProvider>
+              {children}
+            </TooltipProvider>
+          </ModalsProvider>
+        </MantineProvider>
       </body>
     </html>
   )
 }
-
-
 
 import './globals.css'
